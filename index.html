@@ -1,0 +1,341 @@
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --cream: #F5F0E8; --dark: #1A1510; --amber: #C8860A;
+  --amber-light: #F0B429; --muted: #8C7B6E; --card-bg: #241C15;
+}
+body { font-family: 'DM Sans', 'Helvetica Neue', sans-serif; background: var(--dark); color: var(--cream); overflow-x: hidden; }
+
+nav {
+  padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center;
+  background: rgba(26,21,16,0.97); border-bottom: 1px solid rgba(200,134,10,0.15);
+  position: sticky; top: 0; z-index: 100;
+}
+.logo { font-family: 'Playfair Display', Georgia, serif; font-size: 1.2rem; }
+.logo span { color: var(--amber); }
+.hamburger { background: none; border: 1px solid rgba(200,134,10,0.3); color: var(--amber); width: 36px; height: 36px; border-radius: 4px; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; }
+.mobile-menu { display: none; background: #120E09; border-bottom: 1px solid rgba(200,134,10,0.1); }
+.mobile-menu.open { display: block; }
+.mobile-menu a { display: block; padding: 0.9rem 1.5rem; color: var(--cream); text-decoration: none; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); opacity: 0.8; }
+.mobile-menu a:last-child { background: var(--amber); color: var(--dark); font-weight: 500; border: none; opacity: 1; text-align: center; }
+
+.hero {
+  min-height: 90vh; display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 5rem 1.5rem 3rem;
+  background: radial-gradient(ellipse at 60% 30%, #2C1F0E 0%, #0E0A06 65%);
+  position: relative;
+}
+.hero-bg-text {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  font-family: 'Playfair Display', Georgia, serif; font-size: 40vw; font-weight: 700;
+  color: rgba(200,134,10,0.04); white-space: nowrap; user-select: none; pointer-events: none;
+}
+.open-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(200,134,10,0.12); border: 1px solid rgba(200,134,10,0.3);
+  padding: 0.35rem 0.9rem; border-radius: 20px; margin-bottom: 1.2rem; width: fit-content;
+  font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber-light);
+}
+.dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; animation: pulse 2s infinite; flex-shrink: 0; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.hero h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2.2rem, 9vw, 3.5rem); line-height: 1.1; font-weight: 400; margin-bottom: 1rem; }
+.hero h1 em { font-style: italic; color: var(--amber); }
+.hero p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; margin-bottom: 2rem; font-weight: 300; }
+.hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-bottom: 1.5rem; border: 1px solid rgba(200,134,10,0.2); border-radius: 4px; overflow: hidden; }
+.stat { text-align: center; padding: 0.8rem 0.5rem; border-right: 1px solid rgba(200,134,10,0.15); }
+.stat:last-child { border-right: none; }
+.stat .num { font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; color: var(--amber); }
+.stat .label { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+.hero-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.btn-primary { background: var(--amber); color: var(--dark); padding: 0.85rem 1rem; border: none; border-radius: 2px; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; cursor: pointer; width: 100%; }
+.btn-ghost { background: transparent; color: var(--cream); padding: 0.85rem 1rem; border: 1px solid rgba(245,240,232,0.25); border-radius: 2px; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; cursor: pointer; width: 100%; }
+
+.section-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.6rem; }
+
+.about { padding: 3.5rem 1.5rem; background: #120E09; }
+.about h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 2rem; line-height: 1.2; font-weight: 400; margin-bottom: 1rem; }
+.about p { color: var(--muted); line-height: 1.8; margin-bottom: 0.8rem; font-weight: 300; font-size: 0.9rem; }
+.about-quote { border-left: 2px solid var(--amber); padding-left: 1rem; margin: 1.5rem 0; font-family: 'Playfair Display', Georgia, serif; font-style: italic; color: var(--amber-light); font-size: 1rem; line-height: 1.6; }
+.feature-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+.pill { padding: 0.35rem 0.85rem; border: 1px solid rgba(200,134,10,0.3); border-radius: 20px; font-size: 0.7rem; letter-spacing: 0.06em; color: var(--amber-light); text-transform: uppercase; }
+
+.menu-section { padding: 3.5rem 1.5rem; background: var(--dark); }
+.menu-section h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 2rem; font-weight: 400; margin-bottom: 0.3rem; }
+.menu-section .sub { color: var(--muted); margin-bottom: 1.5rem; font-weight: 300; font-size: 0.85rem; }
+.menu-tabs { display: flex; gap: 0; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); overflow-x: auto; scrollbar-width: none; }
+.menu-tabs::-webkit-scrollbar { display: none; }
+.tab { padding: 0.65rem 1rem; background: none; border: none; color: var(--muted); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; font-family: inherit; }
+.tab.active { color: var(--amber); border-bottom-color: var(--amber); }
+.menu-grid { display: grid; grid-template-columns: 1fr; gap: 1px; background: rgba(255,255,255,0.05); }
+.menu-item { background: var(--card-bg); padding: 1.2rem 1rem; }
+.menu-item-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.4rem; }
+.menu-item h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 0.95rem; font-weight: 400; flex: 1; padding-right: 0.75rem; }
+.price { color: var(--amber); font-size: 0.9rem; white-space: nowrap; font-weight: 500; }
+.menu-item p { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+.badge-new { background: var(--amber); color: var(--dark); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.1rem 0.4rem; border-radius: 2px; font-weight: 500; margin-left: 0.3rem; vertical-align: middle; }
+
+.reviews { padding: 3.5rem 1.5rem; background: #0C0905; }
+.reviews h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 2rem; font-weight: 400; margin-bottom: 0.3rem; }
+.rating-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+.rating-big { font-family: 'Playfair Display', Georgia, serif; font-size: 3.5rem; color: var(--amber); line-height: 1; }
+.rating-detail .stars { color: var(--amber); font-size: 0.9rem; }
+.rating-detail .rating-sub { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+.reviews-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+.review-card { background: var(--card-bg); padding: 1.2rem 1rem; border-radius: 2px; border-top: 2px solid var(--amber); }
+.reviewer { font-weight: 500; font-size: 0.85rem; margin-bottom: 0.2rem; }
+.review-meta { font-size: 0.68rem; color: var(--muted); margin-bottom: 0.75rem; }
+.review-text { font-size: 0.82rem; color: var(--muted); line-height: 1.7; font-style: italic; font-weight: 300; }
+
+.info-section { padding: 3.5rem 1.5rem; background: var(--dark); }
+.info-section h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 2rem; font-weight: 400; margin-bottom: 1.5rem; }
+.info-row { display: flex; gap: 0.9rem; margin-bottom: 1.2rem; align-items: flex-start; }
+.info-icon { color: var(--amber); font-size: 1rem; margin-top: 0.1rem; flex-shrink: 0; }
+.info-text .label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem; }
+.info-text .value { font-size: 0.88rem; line-height: 1.6; }
+.hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 1rem; margin-top: 0.5rem; }
+.hour-row { display: flex; justify-content: space-between; font-size: 0.78rem; padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.hour-row .day { color: var(--muted); }
+.tonight { color: var(--amber) !important; font-weight: 500; }
+.map-box { background: var(--card-bg); border-radius: 4px; border: 1px solid rgba(200,134,10,0.15); padding: 2rem 1rem; text-align: center; margin-top: 2rem; }
+.map-box .map-icon { font-size: 2rem; opacity: 0.4; display: block; margin-bottom: 0.75rem; }
+.map-box p { font-size: 0.8rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+.map-link { color: var(--amber); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid rgba(200,134,10,0.3); padding-bottom: 1px; }
+.action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1rem; }
+
+footer { padding: 1.5rem; background: #0C0905; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
+.footer-logo { font-family: 'Playfair Display', Georgia, serif; font-size: 1.1rem; margin-bottom: 0.5rem; }
+.footer-logo span { color: var(--amber); }
+footer .copy { font-size: 0.7rem; color: var(--muted); margin-bottom: 0.75rem; }
+.social-links { display: flex; justify-content: center; gap: 1.5rem; }
+.social-links a { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+
+@media (min-width: 640px) {
+  nav { padding: 1.2rem 2.5rem; }
+  .hamburger { display: none; }
+  .desktop-nav { display: flex !important; align-items: center; gap: 2rem; }
+  .desktop-nav a { color: var(--cream); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.75; }
+  .desktop-nav a:hover { opacity: 1; color: var(--amber-light); }
+  .nav-cta { background: var(--amber); color: var(--dark); padding: 0.45rem 1.1rem; border: none; border-radius: 2px; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; cursor: pointer; }
+  .hero { padding: 6rem 3rem 5rem; }
+  .hero-stats { display: flex; gap: 0; max-width: 320px; }
+  .hero-actions { display: flex; gap: 1rem; max-width: 360px; }
+  .about { padding: 5rem 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .about-quote { margin: 2rem 0; }
+  .menu-section, .reviews, .info-section { padding: 5rem 3rem; }
+  .menu-grid { grid-template-columns: repeat(2, 1fr); }
+  .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .map-box { margin-top: 0; }
+  footer { display: flex; justify-content: space-between; align-items: center; text-align: left; padding: 1.5rem 3rem; }
+  .footer-logo { margin-bottom: 0; }
+  footer .copy { margin-bottom: 0; }
+}
+
+@media (min-width: 1024px) {
+  .menu-grid { grid-template-columns: repeat(3, 1fr); }
+  .reviews-grid { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<nav>
+  <div class="logo">Hungry <span>Owl</span> Cafe</div>
+  <div class="desktop-nav" style="display:none;">
+    <a href="#menu">Menu</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#visit">Visit</a>
+    <button class="nav-cta">Order Online</button>
+  </div>
+  <button class="hamburger" onclick="document.getElementById('mmenu').classList.toggle('open')" aria-label="Menu">☰</button>
+</nav>
+<div class="mobile-menu" id="mmenu">
+  <a href="#menu" onclick="document.getElementById('mmenu').classList.remove('open')">Menu</a>
+  <a href="#reviews" onclick="document.getElementById('mmenu').classList.remove('open')">Reviews</a>
+  <a href="#visit" onclick="document.getElementById('mmenu').classList.remove('open')">Visit Us</a>
+  <a href="#" onclick="document.getElementById('mmenu').classList.remove('open')">Order Online →</a>
+</div>
+
+<section class="hero">
+  <div class="hero-bg-text">OWL</div>
+  <div class="open-badge"><div class="dot"></div>Open now · Closes 3 AM</div>
+  <h1>Where late-night <em>cravings</em> find their home</h1>
+  <p>Dadar's favourite after-dark cafe. Great food, great vibes — open till 3 in the morning when the city finally slows down.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="num">4.2★</div><div class="label">Rating</div></div>
+    <div class="stat"><div class="num">342</div><div class="label">Reviews</div></div>
+    <div class="stat"><div class="num">3AM</div><div class="label">Closes</div></div>
+  </div>
+  <div class="hero-actions">
+    <button class="btn-primary">Explore Menu</button>
+    <button class="btn-ghost">Directions</button>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div>
+    <div class="section-label">Our Story</div>
+    <h2>A cafe that refuses to sleep early</h2>
+    <p>Tucked away on the first floor of Shree Building on Bhavani Shankar Road, Hungry Owl is Dadar's answer to late-night cravings. When everything else shuts, we're just getting started.</p>
+    <div class="about-quote">"Cravings never sleep,<br>and neither do we."</div>
+    <p>From cheesy loaded fries to hearty burgers and comfort pastas — every bite made to satisfy those after-hours hunger pangs.</p>
+    <div class="feature-pills">
+      <div class="pill">Dine-In</div>
+      <div class="pill">Takeaway</div>
+      <div class="pill">Delivery</div>
+      <div class="pill">Kerbside Pickup</div>
+    </div>
+  </div>
+</section>
+
+<section class="menu-section" id="menu">
+  <div class="section-label">What We Serve</div>
+  <h2>The Menu</h2>
+  <p class="sub">Made fresh, loaded with flavour. ₹200–400 per person.</p>
+  <div class="menu-tabs">
+    <button class="tab active" onclick="switchTab(this,'all')">All</button>
+    <button class="tab" onclick="switchTab(this,'fries')">Fries &amp; Snacks</button>
+    <button class="tab" onclick="switchTab(this,'mains')">Mains</button>
+    <button class="tab" onclick="switchTab(this,'pizza')">Pizza</button>
+  </div>
+  <div class="menu-grid" id="menu-grid">
+    <div class="menu-item" data-cat="fries">
+      <div class="menu-item-top"><h3>Peri Peri Cheese Fries <span class="badge-new">Hot</span></h3><div class="price">₹199</div></div>
+      <p>Crispy fries loaded with peri peri spice and melted cheese. An absolute crowd-pleaser.</p>
+    </div>
+    <div class="menu-item" data-cat="fries">
+      <div class="menu-item-top"><h3>Dragon Fries</h3><div class="price">₹189</div></div>
+      <p>Fiery and addictive — seasoned fries with our signature dragon sauce drizzle.</p>
+    </div>
+    <div class="menu-item" data-cat="mains">
+      <div class="menu-item-top"><h3>Mozzarella Tokkebi <span class="badge-new">Fan Fav</span></h3><div class="price">₹269</div></div>
+      <p>Korean-style rice cakes loaded with molten mozzarella. A must-try 10/10.</p>
+    </div>
+    <div class="menu-item" data-cat="mains">
+      <div class="menu-item-top"><h3>Mamma Rossa Pasta</h3><div class="price">₹229</div></div>
+      <p>Rich tomato-based pasta with herbs and a generous serving of comfort.</p>
+    </div>
+    <div class="menu-item" data-cat="mains">
+      <div class="menu-item-top"><h3>Alfredo Pasta</h3><div class="price">₹239</div></div>
+      <p>Creamy classic Alfredo — silky white sauce pasta that hits every time.</p>
+    </div>
+    <div class="menu-item" data-cat="mains">
+      <div class="menu-item-top"><h3>Gully Burger</h3><div class="price">₹219</div></div>
+      <p>A street-inspired burger stacked with the works. Pairs perfectly with fries.</p>
+    </div>
+    <div class="menu-item" data-cat="pizza">
+      <div class="menu-item-top"><h3>All Veggies Pizza</h3><div class="price">₹279</div></div>
+      <p>A garden of fresh toppings on a crispy base with generous mozzarella.</p>
+    </div>
+    <div class="menu-item" data-cat="pizza">
+      <div class="menu-item-top"><h3>Pizza Mozzarella</h3><div class="price">₹259</div></div>
+      <p>Simple, classic, and perfect. Fresh mozzarella on a golden crust.</p>
+    </div>
+    <div class="menu-item" data-cat="pizza">
+      <div class="menu-item-top"><h3>Margherita Pizza</h3><div class="price">₹249</div></div>
+      <p>The timeless classic — tomato, mozzarella, basil. Never fails.</p>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <div class="section-label">What People Say</div>
+  <h2>Loved by Night Owls</h2>
+  <div class="rating-row">
+    <div class="rating-big">4.2</div>
+    <div class="rating-detail">
+      <div class="stars">★★★★☆</div>
+      <div class="rating-sub">342 Google Reviews</div>
+    </div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="reviewer">Achyut Aravind</div>
+      <div class="review-meta">Local Guide · 6 months ago</div>
+      <div class="review-text">"Decently priced good cafe near Dadar station — ambience is pretty good. The Mozzarella Tokkebi is a must try 10/10, loaded with cheese."</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">A Happy Customer</div>
+      <div class="review-meta">Google Review</div>
+      <div class="review-text">"Amazing food, great ambience and an economic place to eat late at night. Totally worth the visit!"</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">Aditya Salvi</div>
+      <div class="review-meta">Local Guide · 9 months ago</div>
+      <div class="review-text">"Open even late at night. I wasn't expecting many customers but it was 70% filled on a weekend. The food is fine."</div>
+    </div>
+  </div>
+</section>
+
+<section class="info-section" id="visit">
+  <div class="section-label">Find Us</div>
+  <h2>Come Say Hello</h2>
+  <div class="info-grid">
+    <div>
+      <div class="info-row">
+        <div class="info-icon">📍</div>
+        <div class="info-text">
+          <div class="label">Address</div>
+          <div class="value">1st Floor, Shree Building, 34 Bhavani Shankar Rd, opp. King's Crest, Dadar West, Mumbai 400028</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">📞</div>
+        <div class="info-text">
+          <div class="label">Phone</div>
+          <div class="value">098200 53103</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">🕐</div>
+        <div class="info-text">
+          <div class="label">Hours</div>
+          <div class="hours-grid">
+            <div class="hour-row"><span class="day">Mon–Fri</span><span>12 PM – 2 AM</span></div>
+            <div class="hour-row"><span class="day tonight">Sat</span><span class="tonight">12 PM – 3 AM</span></div>
+            <div class="hour-row"><span class="day tonight">Sun</span><span class="tonight">12 PM – 3 AM</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">💰</div>
+        <div class="info-text">
+          <div class="label">Price Range</div>
+          <div class="value">₹200 – ₹400 per person</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="map-box">
+        <span class="map-icon">🗺️</span>
+        <p>Shree Building, Bhavani Shankar Rd<br>Dadar West, Mumbai</p>
+        <a href="https://maps.google.com" class="map-link">Open in Google Maps →</a>
+      </div>
+      <div class="action-grid">
+        <button class="btn-primary">Order on Swiggy</button>
+        <button class="btn-ghost">Get Directions</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Hungry <span>Owl</span> Cafe</div>
+  <div class="copy">© 2025 Hungry Owl Cafe · Dadar, Mumbai</div>
+  <div class="social-links">
+    <a href="#">Instagram</a>
+    <a href="#">Swiggy</a>
+    <a href="#">Maps</a>
+  </div>
+</footer>
+
+<script>
+function switchTab(el, cat) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.menu-item').forEach(item => {
+    item.style.display = (cat === 'all' || item.dataset.cat === cat) ? 'block' : 'none';
+  });
+}
+</script>
